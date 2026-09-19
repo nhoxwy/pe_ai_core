@@ -85,22 +85,38 @@ class PeAIService(models.AbstractModel):
     @api.model
     def process_owner_message(self, conversation, text):
         context = self.build_context(text)
+
         history = []
         for msg in conversation.message_ids[-20:]:
-            history.append({"role": msg.role, "content": msg.body})
+            history.append({
+                "role": msg.role,
+                "content": msg.body,
+            })
 
         if context:
             knowledge_text = "\n\n".join(
                 "[Knowledge: %s]\n%s" % (item["name"], item["content"])
                 for item in context
             )
-            history.append({
-                "role": "user",
-                "content": (
-                    "Dưới đây là Knowledge nội bộ liên quan. Chỉ sử dụng nếu phù hợp:\n"
-                    + knowledge_text
-                ),
-            })
 
-        history.append({"role": "user", "content": text})
+            if history and history[-1]["role"] == "user" and history[-1]["content"] == text:
+                history[-1]["content"] = (
+                    "Dưới đây là Knowledge nội bộ liên quan. "
+                    "Chỉ sử dụng nếu phù hợp.\n\n"
+                    + knowledge_text
+                    + "\n\nCâu hỏi của Owner:\n"
+                    + text
+                )
+            else:
+                history.append({
+                    "role": "user",
+                    "content": (
+                        "Dưới đây là Knowledge nội bộ liên quan. "
+                        "Chỉ sử dụng nếu phù hợp.\n\n"
+                        + knowledge_text
+                        + "\n\nCâu hỏi của Owner:\n"
+                        + text
+                    ),
+                })
+
         return self._call_openai(history)
