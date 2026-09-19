@@ -1,0 +1,6 @@
+<odoo>
+    <menuitem id="menu_pe_ai_root" name="Pe AI" sequence="10"/>
+    <menuitem id="menu_pe_ai_knowledge" name="Knowledge" parent="menu_pe_ai_root" action="action_pe_ai_knowledge" sequence="10"/>
+    <menuitem id="menu_pe_ai_conversation" name="Conversations" parent="menu_pe_ai_root" action="action_pe_ai_conversation" sequence="20"/>
+    <menuitem id="menu_pe_ai_configuration" name="Configuration" parent="menu_pe_ai_root" sequence="90"/>
+</odoo>

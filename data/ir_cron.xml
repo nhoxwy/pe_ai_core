@@ -1,0 +1,11 @@
+<odoo>
+    <record id="ir_cron_pe_ai_cleanup" model="ir.cron">
+        <field name="name">Pe AI - Cleanup old draft messages</field>
+        <field name="model_id" ref="model_pe_ai_message"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_cleanup()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active">False</field>
+    </record>
+</odoo>

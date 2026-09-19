@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pe_ai_knowledge_user,pe.ai.knowledge user,model_pe_ai_knowledge,base.group_user,1,1,1,1
+access_pe_ai_conversation_user,pe.ai.conversation user,model_pe_ai_conversation,base.group_user,1,1,1,1
+access_pe_ai_message_user,pe.ai.message user,model_pe_ai_message,base.group_user,1,1,1,1

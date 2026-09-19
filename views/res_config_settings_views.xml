@@ -1,0 +1,30 @@
+<odoo>
+    <record id="res_config_settings_view_form_pe_ai" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.pe.ai</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app string="Pe AI" name="pe_ai_core" data-string="Pe AI">
+                    <block title="Pe AI Core">
+                        <setting string="Enable Pe AI">
+                            <field name="pe_ai_enabled"/>
+                        </setting>
+                        <setting string="LLM Provider">
+                            <field name="pe_ai_provider"/>
+                        </setting>
+                        <setting string="OpenAI API Key" help="API key is stored as an Odoo system parameter.">
+                            <field name="pe_ai_api_key" password="True"/>
+                        </setting>
+                        <setting string="Model">
+                            <field name="pe_ai_model"/>
+                        </setting>
+                        <setting string="System Prompt">
+                            <field name="pe_ai_system_prompt"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>
