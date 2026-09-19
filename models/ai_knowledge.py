@@ -39,11 +39,32 @@ class PeAIKnowledge(models.Model):
     def search_relevant(self, query, limit=8):
         if not query:
             return self.browse()
-        tokens = [x.strip() for x in query.split() if len(x.strip()) >= 2][:8]
-        domain = [("active", "=", True), ("status", "=", "active")]
+
+        tokens = [
+            x.strip()
+            for x in query.split()
+            if len(x.strip()) >= 2
+        ][:8]
+
+        domain = [
+            ("active", "=", True),
+            ("status", "=", "active"),
+        ]
+
         if tokens:
-            clauses = []
+            conditions = []
             for token in tokens:
-                clauses += ["|", ("name", "ilike", token), ("content", "ilike", token)]
-            domain += clauses[1:]
+                conditions.extend([
+                    ("name", "ilike", token),
+                    ("content", "ilike", token),
+                ])
+
+            # OR all conditions together.
+            # Odoo prefix notation requires N-1 "|" operators
+            # for N OR conditions.
+            search_domain = ["|"] * (len(conditions) - 1)
+            search_domain.extend(conditions)
+
+            domain += search_domain
+
         return self.search(domain, limit=limit)
